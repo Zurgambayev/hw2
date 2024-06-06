@@ -1,23 +1,32 @@
 'use client'
 import Image from 'next/image';
-
+import { useState } from 'react';
 const task = {id: 1, text: "Todo Test", completed: false}
 
 export default function Home() {
-  const tasks = []; // rewrite using states
+  // const tasks = []; // rewrite using states
+  const [tasks ,setTasks] = useState([])
+  const [newtask, setNewTask] =  useState("")
+
   const filter = 'all'; // rewrite using states
 
   const handleAddTask = () => {
-    // Implement add task logic here
+    if(newstask.trim() !== ""){
+      setTasks([...tasks, { id: Date.now(), text: newTask, completed: false }]);
+      setNewTask("")
+    }
   };
 
-  const handleToggleTask = () => {
+  const handleToggleTask = (taskId) => {
       // Implement toggle completed/uncompleted task logic here
+      setTasks(tasks.map(task=>
+        task.id === taskId ? {...task, completed: !task.completed} : task 
+      ));
   };
 
-  const handleDeleteTask = () => {
+  const handleDeleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
       // Implement delete task logic here
-
   };
 
   return (
@@ -30,6 +39,8 @@ export default function Home() {
         <input
           type="text"
           className="bg-gray-800 text-white border-none rounded p-4 flex-grow"
+          value={newtask}
+          
           placeholder="What to do ?"
         />
         <button
